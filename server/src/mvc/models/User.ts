@@ -9,16 +9,19 @@ const opts = {
     timestamps: true,
 };
 
-const UserSchema: Schema = new Schema({
-    username: {
-        type: String,
-        required: true,
-        min: 1,
-        unique: true,
-        trim: true,
+const UserSchema: Schema = new Schema(
+    {
+        username: {
+            type: String,
+            required: true,
+            min: 1,
+            unique: true,
+            trim: true,
+        },
+        password: { type: String, required: true, min: 1 },
     },
-    password: { type: String, required: true, min: 1 },
-});
+    opts
+);
 
 const User: Model<UserInterface> = mongoose.model<UserInterface>(
     "User",
