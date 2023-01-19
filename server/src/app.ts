@@ -4,6 +4,8 @@ import path from "path";
 import dotenv from "dotenv";
 
 import index_router from "./routes/index";
+import posts_router from "./routes/posts";
+import users_router from "./routes/users";
 
 dotenv.config();
 
@@ -29,3 +31,5 @@ app.listen(port, () => {
 app.use(express.static(path.join(__dirname, "/../dist")));
 
 app.use("/", index_router);
+app.use("/posts", posts_router);
+app.use("/users", users_router);
