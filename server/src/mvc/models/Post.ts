@@ -1,9 +1,12 @@
 import mongoose, { Model, Schema } from "mongoose";
 
+import { CommentInterface } from "./Comment";
+
 interface PostInterface extends Document {
     title: string;
     content: string;
     published: boolean;
+    comments: CommentInterface[];
 }
 
 const opts = {
@@ -15,6 +18,7 @@ const PostSchema: Schema = new Schema(
         title: { type: String, required: true, trim: true },
         content: { type: String, required: true },
         published: { type: Boolean, required: true, default: true },
+        comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     },
     opts
 );
