@@ -17,7 +17,7 @@ const PostSchema: Schema = new Schema(
     {
         title: { type: String, required: true, trim: true },
         content: { type: String, required: true },
-        published: { type: Boolean, required: true, default: true },
+        published: { type: Boolean, required: true, default: false },
         comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     },
     opts

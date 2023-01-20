@@ -1,7 +1,7 @@
 import mongoose, { Model, Schema } from "mongoose";
 
 interface CommentInterface extends Document {
-    username: string;
+    author: string;
     content: string;
 }
 
@@ -11,7 +11,7 @@ const opts = {
 
 const CommentSchema: Schema = new Schema(
     {
-        username: { type: String, required: true },
+        author: { type: String, required: true },
         content: { type: String, required: true },
     },
     opts
