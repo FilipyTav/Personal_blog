@@ -1,10 +1,48 @@
 import { Request, Response, NextFunction } from "express";
 
-const index = (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).json({
-        success: true,
-        msg: "Got all posts",
-    });
+import mongoose from "mongoose";
+
+import Post from "../models/Post";
+import Comment from "../models/Comment";
+
+// Because
+// MissingSchemaError: Schema hasn't been registered for model "Comment".
+Comment;
+
+const index = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const result = await Post.find();
+
+        res.status(200).json(result);
+    } catch (err) {
+        res.status(400).json({
+            success: false,
+            err,
+        });
+    }
 };
 
-export { index };
+const post_detail = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { post_id } = req.params;
+
+        const result = await Post.findById(post_id).populate({
+            path: "comments",
+            options: {
+                sort: { createdAt: -1 },
+            },
+        });
+
+        return res.status(200).json(result);
+    } catch (err) {
+        if (err instanceof mongoose.Error.CastError)
+            return res.status(404).json({ success: false, err });
+
+        return res.status(400).json({
+            success: false,
+            err,
+        });
+    }
+};
+
+export { index, post_detail };

@@ -57,8 +57,6 @@ const drop_collections = async () => {
     }
 };
 
-drop_collections();
-
 const users: UserInterface[] = [];
 const comments: CommentInterface[] = [];
 const posts: PostInterface[] = [];
@@ -78,8 +76,6 @@ async function UserCreate({
         username,
         password: hashed_password,
     };
-
-    console.log(user_detail);
 
     const user = new User(user_detail);
 
@@ -238,14 +234,16 @@ const createPosts = async (
 };
 
 const init = async () => {
+    await drop_collections();
+
     try {
         const results = await async.series([
             createUsers,
-            createPosts,
             createComments,
+            createPosts,
         ]);
 
-        console.log("Users: " + users);
+        // console.log("Users: " + users);
 
         // All done, disconnect from database
         mongoose.connection.close();
