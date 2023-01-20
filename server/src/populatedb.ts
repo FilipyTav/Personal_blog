@@ -31,7 +31,7 @@ type UserType = {
 };
 
 import async from "async";
-// import bcrypt from "bcryptjs";
+import bcrypt from "bcryptjs";
 
 import Post, { PostInterface } from "./mvc/models/Post";
 import Comment, { CommentInterface } from "./mvc/models/Comment";
@@ -72,11 +72,11 @@ async function UserCreate({
     password: string;
     cb: Function;
 }) {
-    // const hashed_password = await bcrypt.hash(password, 12);
+    const hashed_password = await bcrypt.hash(password, 12);
 
     const user_detail: UserType = {
         username,
-        password,
+        password: hashed_password,
     };
 
     console.log(user_detail);
