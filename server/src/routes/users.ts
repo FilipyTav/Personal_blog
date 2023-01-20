@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response, Router } from "express";
 
-import * as users_controller from "../mvc/controllers/posts";
+import * as users_controller from "../mvc/controllers/users";
 
 const router: Router = express.Router();
 
