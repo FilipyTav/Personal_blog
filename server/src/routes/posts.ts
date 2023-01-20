@@ -8,4 +8,11 @@ router.get("/", posts_controller.index);
 
 router.get("/:post_id", posts_controller.post_detail);
 
+router.get("/:post_id/comments", posts_controller.post_comments);
+
+router.get(
+    "/:post_id/comments/:comment_id",
+    posts_controller.post_comment_detail
+);
+
 export default router;
