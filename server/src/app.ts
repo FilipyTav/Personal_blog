@@ -7,6 +7,7 @@ import path from "path";
 import index_router from "./routes/index";
 import posts_router from "./routes/posts";
 import users_router from "./routes/users";
+import admin_router from "./routes/admin";
 
 dotenv.config();
 
@@ -40,3 +41,4 @@ app.use(express.static(path.join(__dirname, "/../dist")));
 app.use("/", index_router);
 app.use("/posts", posts_router);
 app.use("/users", users_router);
+app.use("/admin", admin_router)
