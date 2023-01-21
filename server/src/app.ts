@@ -41,4 +41,4 @@ app.use(express.static(path.join(__dirname, "/../dist")));
 app.use("/", index_router);
 app.use("/posts", posts_router);
 app.use("/users", users_router);
-app.use("/admin", admin_router)
+app.use("/admin", admin_router);

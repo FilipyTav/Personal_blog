@@ -8,7 +8,7 @@ router.get("/posts", admin_controller.index);
 
 router.get("/posts/:post_id", admin_controller.get_post);
 
-router.post("/posts/:post_id", admin_controller.create_post);
+router.post("/posts", admin_controller.create_post);
 
 router.put("/posts/:post_id", admin_controller.update_post);
 
