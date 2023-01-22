@@ -3,6 +3,7 @@ import express, { Application } from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import path from "path";
+import cors from "cors";
 
 import index_router from "./routes/index";
 import posts_router from "./routes/posts";
@@ -30,6 +31,13 @@ app.use(
 app.use(express.json());
 
 const port: Number = Number(process.env.PORT) || 6001;
+
+app.use(
+    cors({
+        origin: `http://localhost:${port}`,
+        credentials: true,
+    })
+);
 
 app.listen(port, () => {
     console.log(`⚡ Server running at http://localhost:${port}`);
