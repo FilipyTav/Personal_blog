@@ -6,8 +6,10 @@ import {
     validationResult,
 } from "express-validator";
 import mongoose from "mongoose";
+import async from "async";
 
 import Post from "../models/Post";
+import Comment from "../models/Comment";
 
 const index = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -128,8 +130,30 @@ const update_post = [
         }
     },
 ];
-const delete_post = (req: Request, res: Response, next: NextFunction) => {
-    res.json({ msg: "post deleted!" });
+const delete_post = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { post_id } = req.params;
+
+        const result = await Post.findById(post_id);
+
+        if (result?.comments.length)
+            await Comment.deleteMany({ _id: result?.comments });
+
+        await result?.remove();
+
+        res.status(200).json({
+            success: true,
+            msg: "Post was deleted successfully",
+        });
+    } catch (err) {
+        if (err instanceof mongoose.Error.CastError)
+            return res.status(404).json({ success: false, err });
+
+        res.status(400).json({
+            success: false,
+            err,
+        });
+    }
 };
 
 export { index, get_post, create_post, update_post, delete_post };
