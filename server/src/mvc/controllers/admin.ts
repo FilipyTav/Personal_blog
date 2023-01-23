@@ -6,7 +6,6 @@ import {
     validationResult,
 } from "express-validator";
 import mongoose from "mongoose";
-import async from "async";
 
 import Post from "../models/Post";
 import Comment from "../models/Comment";

@@ -1,16 +1,21 @@
 import express, { Application } from "express";
 
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-import path from "path";
 import cors from "cors";
+import dotenv from "dotenv";
 
+dotenv.config();
+
+import mongoose from "mongoose";
+import passport from "passport";
+import path from "path";
+import jwt_strategy from "./strategies/jwt";
+
+import admin_router from "./routes/admin";
 import index_router from "./routes/index";
 import posts_router from "./routes/posts";
 import users_router from "./routes/users";
-import admin_router from "./routes/admin";
 
-dotenv.config();
+passport.use(jwt_strategy);
 
 const mongoDB = process.env.MONGODB_CONNECTION || "";
 mongoose.connect(mongoDB);
@@ -49,4 +54,10 @@ app.use(express.static(path.join(__dirname, "/../dist")));
 app.use("/", index_router);
 app.use("/posts", posts_router);
 app.use("/users", users_router);
-app.use("/admin", admin_router);
+
+// The admin router now requires authentication
+app.use(
+    "/admin",
+    passport.authenticate("jwt", { session: false }),
+    admin_router
+);
